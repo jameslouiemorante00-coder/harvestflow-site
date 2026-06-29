@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HarvestFlow — Funnel Specialist & AI UGC Video Producer</title>
+<meta name="description" content="AI-generated UGC video ads + the funnels they convert on, built for DTC pet and wellness brands.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --black: #050608;
+    --black-2: #0C0E12;
+    --panel: #15171C;
+    --bone: #F5F3EF;
+    --bone-dim: rgba(245,243,239,0.7);
+    --accent: #C9A24B;       /* warm cinematic gold, restrained */
+    --accent-dim: #9C7C34;
+    --line: rgba(245,243,239,0.10);
+    --muted: #8A8D93;
+
+    --display: 'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --body: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--body);
+    color: var(--bone);
+    background: var(--black);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img { display: block; max-width: 100%; }
+  a { color: inherit; }
+
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+
+  h1, h2, h3 {
+    font-family: var(--display);
+    font-weight: 800;
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+  }
+
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+  /* ================= SCROLL REVEAL ================= */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+  }
+  .reveal.in-view { opacity: 1; transform: translateY(0); }
+  .reveal-stagger.in-view .stagger-item {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .stagger-item {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1);
+  }
+  .stagger-item:nth-child(1) { transition-delay: 0.05s; }
+  .stagger-item:nth-child(2) { transition-delay: 0.12s; }
+  .stagger-item:nth-child(3) { transition-delay: 0.19s; }
+  .stagger-item:nth-child(4) { transition-delay: 0.26s; }
+  .stagger-item:nth-child(5) { transition-delay: 0.33s; }
+  .stagger-item:nth-child(6) { transition-delay: 0.40s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal, .stagger-item { opacity: 1; transform: none; transition: none; }
+  }
+
+  /* ================= COUNTDOWN BAR ================= */
+  .announce {
+    background: linear-gradient(90deg, #0A0B0D 0%, #161310 50%, #0A0B0D 100%);
+    border-bottom: 1px solid rgba(201,162,75,0.25);
+    color: var(--bone);
+    text-align: center;
+    font-size: 0.82rem;
+    padding: 11px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .announce strong { color: var(--accent); font-weight: 700; }
+  .announce .pill {
+    border: 1px solid rgba(201,162,75,0.4);
+    border-radius: 100px;
+    padding: 3px 12px;
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    font-size: 0.78rem;
+    color: var(--accent);
+  }
+
+  /* ================= FLOATING PILL NAV ================= */
+  .nav-wrap { padding: 22px 24px 0; }
+  nav {
+    max-width: 1280px;
+    margin: 0 auto;
+    background: rgba(21,23,28,0.7);
+    backdrop-filter: blur(14px);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    padding: 14px 28px;
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+  .logo {
+    font-family: var(--display);
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--bone);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo .mark {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent-dim));
+    color: var(--black);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.78rem;
+    font-weight: 900;
+  }
+  .nav-links { display: flex; gap: 34px; list-style: none; }
+  .nav-links li { white-space: nowrap; margin-right: 0; }
+  .nav-links li:not(:last-child) { margin-right: 34px; }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--bone-dim);
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-weight: 600;
+    transition: color 0.2s ease;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta {
+    background: var(--accent);
+    color: var(--black) !important;
+    padding: 11px 22px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 100px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .nav-mobile-hide { display: flex; }
+
+  /* ================= HERO ================= */
+  .hero {
+    position: relative;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .hero-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 62% 30%;
+  }
+  .hero-bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, var(--black) 0%, rgba(5,6,8,0.85) 28%, rgba(5,6,8,0.25) 55%, rgba(5,6,8,0.55) 100%),
+      linear-gradient(180deg, rgba(5,6,8,0.2) 0%, transparent 30%, rgba(5,6,8,0.5) 100%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    padding: 80px 0 60px;
+    width: 100%;
+  }
+  .hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+  .hero-eyebrow span {
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  .hero-eyebrow .s1 { color: var(--accent); }
+  .hero-eyebrow .s2 { color: var(--bone-dim); }
+  .dot { color: var(--muted); }
+
+  .hero h1 {
+    font-size: clamp(2.6rem, 6.4vw, 5.2rem);
+    color: var(--bone);
+    max-width: 760px;
+    margin-bottom: 26px;
+  }
+  .hero h1 .accent { color: var(--accent); }
+
+  .hero-sub {
+    font-size: 1.08rem;
+    color: var(--bone-dim);
+    max-width: 480px;
+    margin-bottom: 38px;
+    font-weight: 400;
+  }
+  .hero-sub strong { color: var(--bone); font-weight: 600; }
+
+  .btn-row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 44px; }
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--accent);
+    color: var(--black);
+    padding: 18px 34px;
+    font-weight: 700;
+    font-size: 0.92rem;
+    text-decoration: none;
+    border: none;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.15s ease;
+  }
+  .btn-primary:hover { background: #ddb866; transform: translateY(-1px); }
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(245,243,239,0.05);
+    color: var(--bone);
+    padding: 18px 34px;
+    font-weight: 600;
+    font-size: 0.92rem;
+    text-decoration: none;
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    backdrop-filter: blur(8px);
+  }
+
+  .hero-proof {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .avatar-stack { display: flex; }
+  .avatar-stack .av {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    border: 2px solid var(--black);
+    margin-left: -10px;
+    background: linear-gradient(135deg, #2a2d34, #1a1c20);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--bone-dim);
+  }
+  .avatar-stack .av:first-child { margin-left: 0; }
+  .hero-proof-text { font-size: 0.86rem; color: var(--bone-dim); }
+  .hero-proof-text strong { color: var(--accent); }
+  .stars { color: var(--accent); letter-spacing: 1px; font-size: 0.85rem; }
+
+  /* ================= PIPELINE ================= */
+  .pipeline {
+    background: var(--black-2);
+    padding: 100px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .section-eyebrow {
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 18px;
+    display: block;
+  }
+  .pipeline-head { max-width: 640px; margin-bottom: 60px; }
+  .pipeline-head h2 { font-size: clamp(2rem, 3.8vw, 2.8rem); color: var(--bone); }
+
+  .pipeline-strip {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .pipe-step {
+    background: var(--black-2);
+    padding: 32px 26px;
+    transition: background 0.2s ease;
+  }
+  .pipe-step:hover { background: var(--panel); }
+  .pipe-num {
+    font-family: var(--display);
+    font-size: 0.78rem;
+    color: var(--accent);
+    font-weight: 800;
+    margin-bottom: 18px;
+  }
+  .pipe-step h3 {
+    font-size: 1.02rem;
+    color: var(--bone);
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  .pipe-step p { font-size: 0.85rem; color: var(--muted); }
+
+  /* ================= PORTFOLIO ================= */
+  .portfolio { background: var(--black); padding: 100px 0; border-bottom: 1px solid var(--line); }
+  .portfolio-head { max-width: 640px; margin-bottom: 56px; }
+  .portfolio-head h2 { font-size: clamp(2rem, 3.8vw, 2.8rem); color: var(--bone); }
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .reel-card {
+    position: relative;
+    aspect-ratio: 9 / 16;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  .reel-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .reel-card.empty {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .reel-card.empty .plus {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: 1px dashed var(--line);
+    color: var(--muted);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem;
+  }
+  .reel-card.empty .label {
+    font-size: 0.78rem;
+    color: var(--muted);
+    text-align: center;
+    padding: 0 16px;
+  }
+  .reel-card img, .reel-card video {
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+  .reel-card iframe {
+    width: 100%; height: 100%;
+    border: none;
+    position: absolute;
+    inset: 0;
+  }
+  .reel-play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, transparent 50%, rgba(5,6,8,0.8) 100%);
+  }
+  .reel-play .circle {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: rgba(245,243,239,0.15);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(245,243,239,0.3);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--bone);
+    font-size: 1.1rem;
+  }
+  .reel-tag {
+    position: absolute;
+    bottom: 14px;
+    left: 14px;
+    right: 14px;
+    font-size: 0.74rem;
+    color: var(--bone);
+    font-weight: 600;
+  }
+
+  
+  .offer { background: var(--black); padding: 110px 0; }
+  .offer-head { text-align: center; max-width: 620px; margin: 0 auto 60px; }
+  .offer-head .section-eyebrow { display: flex; justify-content: center; }
+  .offer-head h2 { font-size: clamp(2.1rem, 4vw, 3rem); color: var(--bone); }
+
+  .offer-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .offer-card {
+    background: linear-gradient(160deg, var(--panel) 0%, var(--black-2) 100%);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 36px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .offer-card::before {
+    content: "";
+    position: absolute;
+    top: -60%; right: -30%;
+    width: 280px; height: 280px;
+    background: radial-gradient(circle, rgba(201,162,75,0.15) 0%, transparent 70%);
+  }
+  .offer-card .tag {
+    font-size: 0.74rem;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 18px;
+    display: block;
+  }
+  .offer-card h3 { font-size: 1.5rem; color: var(--bone); margin-bottom: 14px; }
+  .offer-card p.desc { color: var(--bone-dim); font-size: 0.95rem; margin-bottom: 22px; }
+  .offer-card ul { list-style: none; }
+  .offer-card li {
+    font-size: 0.9rem;
+    color: var(--bone-dim);
+    padding: 11px 0;
+    border-top: 1px solid var(--line);
+    display: flex;
+    gap: 10px;
+  }
+  .offer-card li::before { content: "—"; color: var(--accent); flex-shrink: 0; }
+
+  /* ================= MID-PAGE IMAGE BREAK ================= */
+  .image-break {
+    background: var(--black);
+    padding: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .image-break-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+  .image-break-item {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+  }
+  .image-break-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 12%;
+    filter: grayscale(35%) contrast(1.1) brightness(0.78);
+    transition: transform 0.5s ease, filter 0.5s ease;
+  }
+  .image-break-item:hover img {
+    transform: scale(1.03);
+    filter: grayscale(20%) contrast(1.1) brightness(0.85);
+  }
+  .image-break-item::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(5,6,8,0.55) 0%, rgba(5,6,8,0.35) 35%, rgba(5,6,8,0.4) 60%, rgba(5,6,8,0.75) 100%);
+    pointer-events: none;
+  }
+  .image-break-cap {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    font-size: 0.78rem;
+    color: var(--bone-dim);
+    letter-spacing: 0.04em;
+    z-index: 1;
+  }
+  .image-break-quote {
+    position: absolute;
+    top: 72%;
+    left: 24px;
+    right: 24px;
+    transform: translateY(-50%);
+    z-index: 2;
+    text-align: center;
+  }
+  .image-break-quote .mark {
+    font-family: var(--display);
+    font-size: 2.4rem;
+    color: var(--accent);
+    line-height: 0.6;
+    display: block;
+    margin-bottom: 10px;
+    opacity: 0.85;
+  }
+  .image-break-quote p {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(1.15rem, 2.6vw, 1.55rem);
+    line-height: 1.25;
+    color: var(--bone);
+    letter-spacing: -0.01em;
+    text-shadow: 0 2px 16px rgba(0,0,0,0.6);
+  }
+
+  /* ================= ABOUT ================= */
+  .about {
+    background: var(--black-2);
+    padding: 110px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 56px;
+    align-items: center;
+  }
+  .about-photo {
+    border-radius: 16px;
+    overflow: hidden;
+    aspect-ratio: 3 / 4;
+  }
+  .about-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 15%;
+  }
+  .about-copy h2 {
+    font-size: clamp(1.9rem, 3.4vw, 2.5rem);
+    color: var(--bone);
+    margin-bottom: 22px;
+  }
+  .about-copy h2 .accent { color: var(--accent); }
+  .about-copy p {
+    color: var(--bone-dim);
+    font-size: 1.02rem;
+    margin-bottom: 18px;
+    max-width: 540px;
+  }
+  .about-copy p strong { color: var(--bone); font-weight: 700; }
+  .about-signoff {
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    font-size: 0.86rem;
+    color: var(--muted);
+  }
+  .about-signoff strong { color: var(--accent); }
+
+  /* ================= TOOLSTACK ================= */
+  .stack { background: var(--black-2); padding: 70px 0; border-bottom: 1px solid var(--line); }
+  .stack-head { margin-bottom: 28px; }
+  .stack-head h2 { font-size: 1.4rem; color: var(--bone); }
+  .stack-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+  .stack-pill {
+    font-size: 0.82rem;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    color: var(--bone-dim);
+    padding: 10px 18px;
+    border-radius: 100px;
+  }
+
+  /* ================= PROOF ================= */
+  .proof { background: var(--black); padding: 110px 0; }
+  .proof-head { text-align: center; max-width: 620px; margin: 0 auto 56px; }
+  .proof-head .section-eyebrow { display: flex; justify-content: center; }
+  .proof-head h2 { font-size: clamp(2rem, 3.8vw, 2.8rem); color: var(--bone); }
+
+  .client-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 60px; }
+  .client-tile {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 24px 16px;
+    text-align: center;
+  }
+  .client-tile .niche { font-size: 0.7rem; letter-spacing: 0.06em; color: var(--accent); font-weight: 700; margin-bottom: 6px; }
+  .client-tile .desc { font-size: 0.82rem; color: var(--muted); }
+
+  .testimonial-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .testimonial {
+    background: var(--panel);
+    border-radius: 12px;
+    padding: 32px 28px;
+    border-left: 2px solid var(--accent);
+  }
+  .testimonial p.quote { font-size: 0.94rem; color: var(--bone-dim); margin-bottom: 18px; }
+  .testimonial .name { font-weight: 700; font-size: 0.88rem; color: var(--bone); }
+  .testimonial .role { font-size: 0.78rem; color: var(--muted); }
+
+  /* ================= LEAD FORM ================= */
+  .lead-section {
+    background: linear-gradient(180deg, var(--black-2) 0%, var(--black) 100%);
+    padding: 110px 0;
+  }
+  .lead-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  .lead-copy h2 { font-size: clamp(2.1rem, 4vw, 2.9rem); color: var(--bone); margin-bottom: 20px; }
+  .lead-copy h2 .accent { color: var(--accent); }
+  .lead-copy p { color: var(--bone-dim); font-size: 1rem; max-width: 440px; }
+
+  .lead-card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 44px;
+  }
+  .lead-card h3 { font-size: 1.15rem; color: var(--bone); margin-bottom: 6px; }
+  .lead-card .sub { color: var(--muted); font-size: 0.88rem; margin-bottom: 26px; }
+
+  #lead-form label {
+    display: block;
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--bone-dim);
+    font-weight: 600;
+    margin-bottom: 7px;
+  }
+  #lead-form .field { margin-bottom: 18px; }
+  #lead-form input {
+    width: 100%;
+    padding: 13px 16px;
+    border: 1px solid var(--line);
+    background: rgba(5,6,8,0.5);
+    color: var(--bone);
+    font-size: 0.95rem;
+    font-family: var(--body);
+    border-radius: 8px;
+  }
+  #lead-form input::placeholder { color: var(--muted); }
+  #lead-form input:focus { border-color: var(--accent); outline: none; }
+  #lead-form button { width: 100%; justify-content: center; margin-top: 4px; }
+  #form-status { margin-top: 14px; font-size: 0.84rem; min-height: 20px; }
+  #form-status.success { color: #7fd99a; font-weight: 600; }
+  #form-status.error { color: #f08a7a; font-weight: 600; }
+
+  /* ================= FAQ ================= */
+  .faq { background: var(--black); padding: 110px 0; }
+  .faq-grid { display: grid; grid-template-columns: 0.7fr 1.3fr; gap: 60px; }
+  .faq-head h2 { font-size: clamp(2rem, 3.4vw, 2.5rem); color: var(--bone); }
+  .faq-item { padding: 24px 0; border-bottom: 1px solid var(--line); }
+  .faq-item:first-child { padding-top: 0; }
+  .faq-item h3 { font-family: var(--body); font-size: 1rem; font-weight: 700; color: var(--bone); margin-bottom: 8px; }
+  .faq-item p { color: var(--bone-dim); font-size: 0.92rem; }
+
+  /* ================= FINAL CTA ================= */
+  .final-cta {
+    background: radial-gradient(ellipse at center, #1a1610 0%, var(--black) 70%);
+    text-align: center;
+    padding: 100px 0;
+    border-top: 1px solid var(--line);
+  }
+  .final-cta .section-eyebrow { display: flex; justify-content: center; }
+  .final-cta h2 { font-size: clamp(2.2rem, 5vw, 3.4rem); margin: 20px 0 34px; color: var(--bone); }
+
+  /* ================= FOOTER ================= */
+  footer { background: var(--black-2); color: var(--muted); padding: 36px 0; text-align: center; font-size: 0.82rem; border-top: 1px solid var(--line); }
+  footer .logo { justify-content: center; margin-bottom: 12px; }
+
+  /* ================= RESPONSIVE ================= */
+  @media (max-width: 920px) {
+    .nav-mobile-hide { display: none; }
+    .hero { min-height: auto; padding-top: 30px; }
+    .hero-bg { position: absolute; inset: 0; height: 520px; }
+    .hero-bg img { object-position: 60% 22%; }
+    .hero-bg::after { background: linear-gradient(180deg, rgba(5,6,8,0.25) 0%, rgba(5,6,8,0.55) 55%, var(--black) 92%); }
+    .hero-content { padding: 320px 0 50px; position: relative; }
+    .pipeline-strip { grid-template-columns: repeat(2, 1fr); }
+    .image-break-grid { grid-template-columns: 1fr; }
+    .about-grid { grid-template-columns: 1fr; gap: 32px; }
+    .about-photo { max-width: 320px; margin: 0 auto; }
+    .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
+    .offer-cards { grid-template-columns: 1fr; }
+    .client-grid { grid-template-columns: repeat(2, 1fr); }
+    .testimonial-grid { grid-template-columns: 1fr; }
+    .lead-inner { grid-template-columns: 1fr; gap: 36px; }
+    .faq-grid { grid-template-columns: 1fr; gap: 30px; }
+    .lead-card { padding: 30px 24px; }
+    .nav-wrap { padding: 16px 16px 0; }
+    nav { border-radius: 20px; padding: 14px 20px; }
+  }
+  @media (max-width: 540px) {
+    .container { padding: 0 20px; }
+    .btn-row { flex-direction: column; }
+    .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+    .client-grid { grid-template-columns: 1fr; }
+    .hero-content { padding-top: 320px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="announce">
+  <span>🔥 <strong>2 production slots open</strong> for July — DTC pet & wellness brands</span>
+  <span class="pill">04d : 12h : 30m</span>
+</div>
+
+<div class="nav-wrap">
+  <nav>
+    <div class="nav-inner">
+      <div class="logo"><span class="mark">HF</span>HARVESTFLOW</div>
+      <ul class="nav-links nav-mobile-hide">
+        <li><a href="#process">Process</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#portfolio">Work</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+      <a href="#apply" class="nav-cta nav-mobile-hide">Let's Start →</a>
+    </div>
+  </nav>
+</div>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="hero-bg">
+    <picture>
+      <source media="(min-width: 921px)" srcset="images/hero-desktop-graded.jpg">
+      <img src="images/hero-graded.jpg" alt="James Louie Morante, Founder of HarvestFlow">
+    </picture>
+  </div>
+  <div class="container hero-content">
+    <div class="hero-eyebrow">
+      <span class="s1">FUNNEL SPECIALIST</span><span class="dot">·</span><span class="s2">AI UGC VIDEO PRODUCER</span>
+    </div>
+    <h1>Creative that converts.<br>Built <span class="accent">end to end.</span></h1>
+    <p class="hero-sub">
+      Every day without this funnel is a day your competitors capture the
+      customer that should've been yours. <strong>I build the ad. I build the
+      page. You start getting leads.</strong> Let's start this project right away.
+    </p>
+    <div class="btn-row">
+      <a href="#apply" class="btn-primary">Let's Start This Project →</a>
+      <a href="#process" class="btn-secondary">See How It Works</a>
+    </div>
+    <div class="hero-proof">
+      <div class="avatar-stack">
+        <div class="av">IP</div>
+        <div class="av">BM</div>
+        <div class="av">PC</div>
+        <div class="av">PD</div>
+      </div>
+      <div class="hero-proof-text"><span class="stars">★★★★★</span> &nbsp;Trusted by <strong>5+ DTC brands</strong></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PIPELINE ================= -->
+<section class="pipeline" id="process">
+  <div class="container">
+    <div class="pipeline-head reveal">
+      <span class="section-eyebrow">The Process</span>
+      <h2>From prompt to converted lead. One pipeline.</h2>
+    </div>
+    <div class="pipeline-strip reveal-stagger">
+      <div class="pipe-step stagger-item">
+        <div class="pipe-num">01</div>
+        <h3>Prompt</h3>
+        <p>Brand brief, offer, and avatar direction mapped into a reusable prompt kit.</p>
+      </div>
+      <div class="pipe-step stagger-item">
+        <div class="pipe-num">02</div>
+        <h3>Generate</h3>
+        <p>AI avatar UGC produced in Veo, Higgsfield Soul 2.0, and HeyGen.</p>
+      </div>
+      <div class="pipe-step stagger-item">
+        <div class="pipe-num">03</div>
+        <h3>Edit</h3>
+        <p>Cut, paced, and captioned in CapCut for scroll-stopping retention.</p>
+      </div>
+      <div class="pipe-step stagger-item">
+        <div class="pipe-num">04</div>
+        <h3>Funnel</h3>
+        <p>Landing page built around the creative. Same offer, zero drop-off.</p>
+      </div>
+      <div class="pipe-step stagger-item">
+        <div class="pipe-num">05</div>
+        <h3>Convert</h3>
+        <p>Leads routed straight into GoHighLevel. Tagged and followed up automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MID-PAGE IMAGE BREAK ================= -->
+<section class="image-break">
+  <div class="image-break-grid">
+    <div class="image-break-item">
+      <img src="images/mid-navypolo.jpg" alt="James speaking on stage">
+      <div class="image-break-quote">
+        <span class="mark">"</span>
+        <p>Most brands aren't losing because of bad products. They're losing because their leads have nowhere to land.</p>
+      </div>
+    </div>
+    <div class="image-break-item">
+      <img src="images/mid2-navy-podium.jpg" alt="James presenting at a podium">
+      <div class="image-break-quote">
+        <span class="mark">"</span>
+        <p>Build the system once. Let it capture, convert, and follow up every single time, without you.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section class="about" id="about">
+  <div class="container about-grid">
+    <div class="about-photo reveal">
+      <img src="images/mid1-mauve.jpg" alt="James Louie Morante, Founder of HarvestFlow">
+    </div>
+    <div class="about-copy reveal">
+      <span class="section-eyebrow">About</span>
+      <h2>I'm James, <span class="accent">founder of HarvestFlow.</span></h2>
+      <p>I help DTC brands scale with AI-powered video and the funnels built to convert it.</p>
+      <p><strong>Stop losing leads. Get a system.</strong> Growth shouldn't run on luck. It should run on a process built to repeat, every single time.</p>
+      <div class="about-signoff">
+        <strong>James Louie Morante</strong>, Founder of HarvestFlow
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PORTFOLIO ================= -->
+<section class="portfolio" id="portfolio">
+  <div class="container">
+    <div class="portfolio-head reveal">
+      <span class="section-eyebrow">Selected Work</span>
+      <h2>Recent AI UGC ad reels</h2>
+    </div>
+    <div class="portfolio-grid reveal-stagger">
+      <!-- 
+        REPLACE EACH "empty" CARD BELOW ONCE YOU HAVE YOUR GOOGLE DRIVE LINKS.
+        For a video: change class="reel-card empty" to class="reel-card"
+        and replace the inner content with either:
+          <video src="YOUR_VIDEO_URL" muted loop autoplay playsinline></video>
+        or a thumbnail image linking out to the Drive video:
+          <a class="reel-card" href="YOUR_DRIVE_LINK" target="_blank">
+            <img src="YOUR_THUMBNAIL_URL" alt="...">
+            <div class="reel-play"><div class="circle">▶</div></div>
+            <div class="reel-tag">Project Name</div>
+          </a>
+      -->
+      <a class="reel-card stagger-item"
+         href="https://drive.google.com/file/d/FILEID_1/view"
+         target="_blank" rel="noopener">
+        <iframe
+          src="https://drive.google.com/file/d/FILEID_1/preview"
+          width="100%" height="100%"
+          style="border:none; position:absolute; inset:0;"
+          allow="autoplay"
+          loading="lazy">
+        </iframe>
+        <div class="reel-play"><div class="circle">▶</div></div>
+        <div class="reel-tag">Project 1 Name</div>
+      </a>
+      <a class="reel-card stagger-item"
+         href="https://drive.google.com/file/d/FILEID_2/view"
+         target="_blank" rel="noopener">
+        <iframe
+          src="https://drive.google.com/file/d/FILEID_2/preview"
+          width="100%" height="100%"
+          style="border:none; position:absolute; inset:0;"
+          allow="autoplay"
+          loading="lazy">
+        </iframe>
+        <div class="reel-play"><div class="circle">▶</div></div>
+        <div class="reel-tag">Project 2 Name</div>
+      </a>
+      <a class="reel-card stagger-item"
+         href="https://drive.google.com/file/d/FILEID_3/view"
+         target="_blank" rel="noopener">
+        <iframe
+          src="https://drive.google.com/file/d/FILEID_3/preview"
+          width="100%" height="100%"
+          style="border:none; position:absolute; inset:0;"
+          allow="autoplay"
+          loading="lazy">
+        </iframe>
+        <div class="reel-play"><div class="circle">▶</div></div>
+        <div class="reel-tag">Project 3 Name</div>
+      </a>
+      <a class="reel-card stagger-item"
+         href="https://drive.google.com/file/d/FILEID_4/view"
+         target="_blank" rel="noopener">
+        <iframe
+          src="https://drive.google.com/file/d/FILEID_4/preview"
+          width="100%" height="100%"
+          style="border:none; position:absolute; inset:0;"
+          allow="autoplay"
+          loading="lazy">
+        </iframe>
+        <div class="reel-play"><div class="circle">▶</div></div>
+        <div class="reel-tag">Project 4 Name</div>
+      </a>
+      <a class="reel-card stagger-item"
+         href="https://drive.google.com/file/d/FILEID_5/view"
+         target="_blank" rel="noopener">
+        <iframe
+          src="https://drive.google.com/file/d/FILEID_5/preview"
+          width="100%" height="100%"
+          style="border:none; position:absolute; inset:0;"
+          allow="autoplay"
+          loading="lazy">
+        </iframe>
+        <div class="reel-play"><div class="circle">▶</div></div>
+        <div class="reel-tag">Project 5 Name</div>
+      </a>
+      <a class="reel-card stagger-item"
+         href="https://drive.google.com/file/d/FILEID_6/view"
+         target="_blank" rel="noopener">
+        <iframe
+          src="https://drive.google.com/file/d/FILEID_6/preview"
+          width="100%" height="100%"
+          style="border:none; position:absolute; inset:0;"
+          allow="autoplay"
+          loading="lazy">
+        </iframe>
+        <div class="reel-play"><div class="circle">▶</div></div>
+        <div class="reel-tag">Project 6 Name</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= OFFER ================= -->
+<section class="offer">
+  <div class="container">
+    <div class="offer-head reveal">
+      <span class="section-eyebrow">The Package</span>
+      <h2>Stop choosing between good creative and a funnel that converts it. Get both.</h2>
+    </div>
+    <div class="offer-cards reveal-stagger">
+      <div class="offer-card stagger-item">
+        <span class="tag">SERVICE 01</span>
+        <h3>AI UGC Video Production</h3>
+        <p class="desc">Your offer, turned into ad creative that stops the scroll. No camera, creator, or studio day needed.</p>
+        <ul>
+          <li>Avatar-led product try-on & testimonial style videos</li>
+          <li>Multi-clip prompt kits, reusable per offer</li>
+          <li>Built in Veo, Higgsfield, HeyGen and edited in CapCut</li>
+          <li>Delivered ready to run on Meta & TikTok</li>
+        </ul>
+      </div>
+      <div class="offer-card stagger-item">
+        <span class="tag">SERVICE 02</span>
+        <h3>Funnel Build</h3>
+        <p class="desc">The page your ad deserves. Same message, same offer, built to close instead of leak leads.</p>
+        <ul>
+          <li>Custom-coded page, deployed live in days not weeks</li>
+          <li>Lead form wired directly into GoHighLevel</li>
+          <li>Automated tagging, pipeline stage, and follow-up sequence</li>
+          <li>Built once, duplicated fast for new offers</li>
+        </ul>
+      </div>
+      <div class="offer-card stagger-item">
+        <span class="tag">SERVICE 03 — NEW</span>
+        <h3>Turn Yourself Into AI</h3>
+        <p class="desc">Your face. Your voice. Infinite content without ever picking up a camera again.</p>
+        <ul>
+          <li>Custom AI avatar trained on your own likeness</li>
+          <li>Unlimited scripts, same consistent on-camera "you"</li>
+          <li>Voice-matched delivery for true-to-you UGC at scale</li>
+          <li>Own the asset and reuse it across every future campaign</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TOOLSTACK ================= -->
+<section class="stack">
+  <div class="container">
+    <div class="stack-head">
+      <span class="section-eyebrow">Tool Stack</span>
+      <h2>What it's built with</h2>
+    </div>
+    <div class="stack-grid">
+      <span class="stack-pill">Google Veo / Flow</span>
+      <span class="stack-pill">Higgsfield Soul 2.0</span>
+      <span class="stack-pill">HeyGen</span>
+      <span class="stack-pill">CapCut</span>
+      <span class="stack-pill">GoHighLevel</span>
+      <span class="stack-pill">GitHub + Netlify</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROOF ================= -->
+<section class="proof" id="work">
+  <div class="container">
+    <div class="proof-head reveal">
+      <span class="section-eyebrow">Recent Work</span>
+      <h2>Brands I've produced for</h2>
+    </div>
+    <div class="client-grid reveal-stagger">
+      <div class="client-tile stagger-item"><div class="niche">PET SUPPLEMENT</div><div class="desc">Joint health brand</div></div>
+      <div class="client-tile stagger-item"><div class="niche">PEST CONTROL</div><div class="desc">DTC home brand</div></div>
+      <div class="client-tile stagger-item"><div class="niche">WELLNESS</div><div class="desc">Collagen supplement</div></div>
+      <div class="client-tile stagger-item"><div class="niche">PET CARE</div><div class="desc">Emergency care brand</div></div>
+      <div class="client-tile stagger-item"><div class="niche">HOME / BUILD</div><div class="desc">Cladding & elevation</div></div>
+    </div>
+    <div class="testimonial-grid reveal-stagger">
+      <div class="testimonial stagger-item">
+        <p class="quote">"The avatar ads James built didn't feel like ads. They felt native. CTR jumped within the first week."</p>
+        <div class="name">R.D.</div>
+        <div class="role">Founder, Pet Supplement DTC</div>
+      </div>
+      <div class="testimonial stagger-item">
+        <p class="quote">"He built the video AND the page it landed on. No back-and-forth between two vendors."</p>
+        <div class="name">M.S.</div>
+        <div class="role">Marketing Lead, Wellness Brand</div>
+      </div>
+      <div class="testimonial stagger-item">
+        <p class="quote">"Leads landed directly in our GHL pipeline tagged and ready. Saved us hours a week."</p>
+        <div class="name">A.T.</div>
+        <div class="role">Operations Manager, Pet Care Brand</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LEAD FORM ================= -->
+<section class="lead-section" id="apply">
+  <div class="container lead-inner">
+    <div class="lead-copy reveal">
+      <span class="section-eyebrow">Start Now</span>
+      <h2>2 production slots <span class="accent">open for July.</span></h2>
+      <p>
+        Every week you wait is a week your funnel isn't running. Fill this
+        out and let's start this project right away. I'll respond within
+        48 hours to lock your slot.
+      </p>
+    </div>
+    <div class="lead-card reveal">
+      <h3>Let's Start This Project</h3>
+      <p class="sub">Takes about a minute. No payment required.</p>
+      <form id="lead-form">
+        <div class="field">
+          <label for="full_name">Full Name</label>
+          <input type="text" id="full_name" name="full_name" placeholder="Your name" required>
+        </div>
+        <div class="field">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="you@brand.com" required>
+        </div>
+        <div class="field">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" placeholder="+1 555 000 0000" required>
+        </div>
+        <button type="submit" class="btn-primary" id="submit-btn">Let's Start This Project →</button>
+        <div id="form-status"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="faq" id="faq">
+  <div class="container faq-grid">
+    <div class="faq-head reveal">
+      <span class="section-eyebrow">Questions</span>
+      <h2>Before you start</h2>
+    </div>
+    <div>
+      <div class="faq-item">
+        <h3>Do you only do AI avatar videos, or real creators too?</h3>
+        <p>My core service is AI-generated UGC built to look and feel like real creator content without the cost or logistics of a creator roster.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Can I just hire you for the funnel, not the video?</h3>
+        <p>Yes, both services work independently, but most clients see the biggest lift when the ad creative and the landing page are built together.</p>
+      </div>
+      <div class="faq-item">
+        <h3>What's the typical turnaround?</h3>
+        <p>Video production typically runs 5-7 days per batch. A funnel page deploys in 2-4 days once the brief is locked.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Do I need to already use GoHighLevel?</h3>
+        <p>It helps, but isn't required. I can help you get a simple GHL setup running as part of the funnel build.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FINAL CTA ================= -->
+<section class="final-cta">
+  <div class="container reveal">
+    <span class="section-eyebrow">Last Call — July Slots</span>
+    <h2>Stop losing leads to a funnel<br>that isn't built yet.</h2>
+    <a href="#apply" class="btn-primary">Let's Start This Project →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="logo"><span class="mark">HF</span>HARVESTFLOW</div>
+    &copy; 2026 HarvestFlow Studios. All rights reserved.
+  </div>
+</footer>
+
+<script>
+  // ===== SCROLL REVEAL ANIMATION =====
+  const revealEls = document.querySelectorAll('.reveal, .reveal-stagger');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+
+  revealEls.forEach(el => observer.observe(el));
+
+  // ===== LEAD FORM SUBMISSION =====
+  // Replace with the Inbound Webhook URL from GHL:
+  // Automation > Workflows > New Workflow > Trigger: Inbound Webhook
+  const GHL_WEBHOOK_URL = "PASTE_GHL_WEBHOOK_URL_HERE";
+
+  const form = document.getElementById('lead-form');
+  const statusEl = document.getElementById('form-status');
+  const submitBtn = document.getElementById('submit-btn');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const payload = {
+      full_name: document.getElementById('full_name').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      phone: document.getElementById('phone').value.trim(),
+      source: "HarvestFlow Landing Page — Let's Start This Project",
+      page_url: window.location.href,
+      submitted_at: new Date().toISOString()
+    };
+
+    if (!payload.full_name || !payload.email || !payload.phone) {
+      statusEl.textContent = "Please fill in all fields.";
+      statusEl.className = "error";
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Submitting...";
+
+    fetch(GHL_WEBHOOK_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    }).catch(function (err) {
+      console.error("Webhook submission error:", err);
+    });
+
+    setTimeout(function () {
+      statusEl.textContent = "Got it. Let's start this project. I'll be in touch within 48 hours.";
+      statusEl.className = "success";
+      form.reset();
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Let's Start This Project →";
+    }, 600);
+  });
+</script>
+
+</body>
+</html>
